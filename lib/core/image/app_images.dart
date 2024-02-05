@@ -21,6 +21,7 @@ class AppImages {
   static const String onboardingTwo = 'assets/images/onboarding_two.png';  
   static const String onboradingTrhee = 'assets/images/onborading_trhee.png';  
   static const String pauseIcon = 'assets/images/pause_icon.png';  
+  static const String playIcon = 'assets/images/play_icon.png';  
   static const String practiceIcon = 'assets/images/practice_icon.png';  
   static const String premium = 'assets/images/premium.png';  
   static const String searchIcon = 'assets/images/search_icon.png';  
