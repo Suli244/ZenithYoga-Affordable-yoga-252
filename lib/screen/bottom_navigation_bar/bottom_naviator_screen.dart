@@ -24,8 +24,8 @@ class _BottomNavigatorState extends State<BottomNavigatorScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        unselectedFontSize: 10,
-        selectedFontSize: 10,
+        unselectedFontSize: 15,
+        selectedFontSize: 15,
         currentIndex: index,
         onTap: (indexFrom) async {
           setState(() {

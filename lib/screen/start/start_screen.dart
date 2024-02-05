@@ -1,6 +1,7 @@
 import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/core/premi/open.dart';
 import 'package:affordable_yoga_252/screen/bottom_navigation_bar/bottom_naviator_screen.dart';
+import 'package:affordable_yoga_252/screen/introduction_process/introduction_process_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -45,7 +46,7 @@ class _StartScreenState extends State<StartScreen> {
  Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const BottomNavigatorScreen(),
+          builder: (context) => const IntroductionProcessScreen(),
         ),
       );
 
@@ -56,7 +57,7 @@ class _StartScreenState extends State<StartScreen> {
     //   Navigator.pushReplacement(
     //     context,
     //     MaterialPageRoute(
-    //       builder: (context) => const OnboardingScreen(),
+    //       builder: (context) => const IntroductionProcessScreen(),
     //     ),
     //   );
     //   await Future.delayed(const Duration(seconds: 8));

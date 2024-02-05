@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
           splashFactory: NoSplash.splashFactory,
           highlightColor: Colors.transparent,
           scaffoldBackgroundColor: const Color(0xffEFEFF9),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xffEFEFF9),
+          ),
         ),
       ),
       child: const StartScreen(),
