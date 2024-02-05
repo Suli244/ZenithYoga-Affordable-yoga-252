@@ -7,7 +7,10 @@ import 'package:affordable_yoga_252/screen/page/statistics/statistics_page.dart'
 import 'package:flutter/material.dart';
 
 class BottomNavigatorScreen extends StatefulWidget {
-  const BottomNavigatorScreen({Key? key}) : super(key: key);
+  const BottomNavigatorScreen({Key? key, this.currentIndex = 0})
+      : super(key: key);
+
+  final int currentIndex;
 
   @override
   State<BottomNavigatorScreen> createState() => _BottomNavigatorState();
@@ -15,6 +18,12 @@ class BottomNavigatorScreen extends StatefulWidget {
 
 class _BottomNavigatorState extends State<BottomNavigatorScreen> {
   int index = 0;
+  @override
+  void initState() {
+    index = widget.currentIndex;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
