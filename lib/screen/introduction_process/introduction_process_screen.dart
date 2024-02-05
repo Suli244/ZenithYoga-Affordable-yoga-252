@@ -83,7 +83,7 @@ class _IntroductionProcessScreenState extends State<IntroductionProcessScreen> {
                     ),
                     (protected) => false,
                   );
-                  // await OpenAffordableYoga.setFirstOpen();
+                  await OpenAffordableYoga.setFirstOpen();
                 } else {
                   controller.nextPage(
                     duration: const Duration(milliseconds: 300),

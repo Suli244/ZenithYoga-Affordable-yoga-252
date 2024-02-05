@@ -42,43 +42,30 @@ class _StartScreenState extends State<StartScreen> {
 
   toGoOnBoarAffordableYoga() async {
     await Future.delayed(const Duration(milliseconds: 1450));
-
- Navigator.pushReplacement(
+    final isFirst = await OpenAffordableYoga.getFirstOpen();
+    if (!isFirst) {
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const IntroductionProcessScreen(),
         ),
       );
-
-
-
-    // final isFirst = await OpenAffordableYoga.getFirstOpen();
-    // if (!isFirst) {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const IntroductionProcessScreen(),
-    //     ),
-    //   );
-    //   await Future.delayed(const Duration(seconds: 8));
-    //   try {
-    //     final InAppReview inAppReview = InAppReview.instance;
-    //     if (await inAppReview.isAvailable()) {
-    //       inAppReview.requestReview();
-    //     }
-    //   } catch (e) {
-    //     throw Exception(e);
-    //   }
-    // } else {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const BottomNavigatorScreen(),
-    //     ),
-    //   );
-    // }
-
-
-
+      await Future.delayed(const Duration(seconds: 8));
+      try {
+        final InAppReview inAppReview = InAppReview.instance;
+        if (await inAppReview.isAvailable()) {
+          inAppReview.requestReview();
+        }
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const BottomNavigatorScreen(),
+        ),
+      );
+    }
   }
 }
