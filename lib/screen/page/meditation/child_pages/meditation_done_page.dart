@@ -1,3 +1,4 @@
+import 'package:affordable_yoga_252/MODELS/noter_model.dart';
 import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/screen/bottom_navigation_bar/bottom_naviator_screen.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/note_pages/new_note_page.dart';
@@ -19,7 +20,9 @@ class MeditationDonePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NewNotePage(),
+                  builder: (context) => const NewNotePage(
+                    noteType: NoteType.Yoga,
+                  ),
                 ),
               );
             },
