@@ -37,7 +37,7 @@ class MeditationDoneYogaPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => const BottomNavigatorScreen(
-                    currentIndex: 1,
+                    currentIndex: 0,
                   ),
                 ),
                 (route) => false,
