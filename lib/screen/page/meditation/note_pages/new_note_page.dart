@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class NewNotePage extends StatefulWidget {
-  const NewNotePage({super.key, required this.noteType});
+  const NewNotePage({super.key, required this.noteType,   this.currentIndex = 1});
 
   final NoteType noteType;
+  final int currentIndex;
 
   @override
   State<NewNotePage> createState() => _NewNotePageState();
@@ -142,8 +143,8 @@ class _NewNotePageState extends State<NewNotePage> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const BottomNavigatorScreen(
-                          currentIndex: 1,
+                        builder: (_) => BottomNavigatorScreen(
+                          currentIndex: widget.currentIndex,
                         ),
                       ),
                       (route) => false,
@@ -176,4 +177,3 @@ class _NewNotePageState extends State<NewNotePage> {
     );
   }
 }
-

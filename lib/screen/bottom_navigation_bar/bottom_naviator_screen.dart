@@ -3,6 +3,7 @@ import 'package:affordable_yoga_252/screen/page/configuration/configuration_page
 import 'package:affordable_yoga_252/screen/page/meditation/cubit/meditation_cubit.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/meditation_page.dart';
 import 'package:affordable_yoga_252/screen/page/notes/notes_page.dart';
+import 'package:affordable_yoga_252/screen/page/practice/cubit/practice_cubit.dart';
 import 'package:affordable_yoga_252/screen/page/practice/practice_page.dart';
 import 'package:affordable_yoga_252/screen/page/statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,15 @@ class _BottomNavigatorState extends State<BottomNavigatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MeditationCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MeditationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PracticeCubit(),
+        ),
+      ],
       child: Scaffold(
         body: pages[index],
         extendBody: true,
