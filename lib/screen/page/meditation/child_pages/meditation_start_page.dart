@@ -1,9 +1,11 @@
 import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/child_pages/meditation_complete_page.dart';
+import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_model.dart';
 import 'package:flutter/material.dart';
 
 class MeditationStartPage extends StatelessWidget {
-  const MeditationStartPage({super.key});
+  const MeditationStartPage(this.yoga, {super.key});
+  final YogaPlans yoga;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +15,7 @@ class MeditationStartPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const MeditationCompletePage(),
+              builder: (context) => MeditationCompletePage(yoga),
             ),
           );
         },
@@ -53,41 +55,29 @@ class MeditationStartPage extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 150),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  const Text(
-                    'Welcome to Wellness',
-                    style: TextStyle(
+                  Text(
+                    yoga.title,
+                    style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    '30 minutes',
-                    style: TextStyle(
+                  Text(
+                    '${yoga.min} minutes',
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    '''Introduce new practitioners to the foundational concepts of yoga, emphasizing the connection between mind, body, and breath, and setting the stage for a transformative wellness journey.
-
-Introduction (5 minutes):
-Greetings and a brief overview of the course.
-Discussion on the holistic benefits of yoga for stress relief and overall health.
-Explanation of what to expect in the coming lessons.
-Understanding Yoga (5 minutes):
-A concise history and philosophy of yoga to give context to the practice.
-Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-Breath Awareness (5 minutes):
-Introduction to Pranayama (yogic breathing).
-Guided practice on observing the natural breath.
-Techniques to deepen and slow down the breath, establishing a rhythmic pattern.''',
-                    style: TextStyle(
+                  Text(
+                    yoga.desciption,
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),

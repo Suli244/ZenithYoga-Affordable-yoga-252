@@ -39,12 +39,13 @@ class _MeditationPageState extends State<MeditationPage> {
                     child: CircularProgressIndicator.adaptive(),
                   );
                 },
-                success: (meditations, search) {
+                success: (meditations, novice, armateur, professional, type,
+                    search) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const Text(
-                        'Yoga',
+                        'Meditation',
                         style: TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.w600,
@@ -53,7 +54,11 @@ class _MeditationPageState extends State<MeditationPage> {
                       const SizedBox(height: 24),
                       TextField(
                         onChanged: (value) {
-                          context.read<MeditationCubit>().isdooo(value, _chai);
+                          context.read<MeditationCubit>().isdooo(
+                                value,
+                                _chai,
+                                meditations,
+                              );
                         },
                         decoration: InputDecoration(
                           hintText: 'Search',
@@ -95,7 +100,8 @@ class _MeditationPageState extends State<MeditationPage> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      getTab(meditations[_chai.index])
+                      if (meditations.isNotEmpty)
+                        getTab(meditations[_chai.index])
                     ],
                   );
                 },
@@ -134,6 +140,12 @@ class _MeditationPageState extends State<MeditationPage> {
         );
     }
   }
+
+  Widget getTabSearch(List<NoviceTabBar> list) {
+    return BodyList(
+      novice: list,
+    );
+  }
 }
 
 class BodyList extends StatelessWidget {
@@ -142,74 +154,87 @@ class BodyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        itemCount: novice.length,
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            height: 12,
-          );
-        },
-        itemBuilder: (BuildContext context, int index) {
-          final katalizator = novice[index];
-          return GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const MeditationDetailPage(),
+    if (novice.isNotEmpty) {
+      return Expanded(
+        child: ListView.separated(
+          itemCount: novice.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(
+              height: 12,
+            );
+          },
+          itemBuilder: (BuildContext context, int index) {
+            final katalizator = novice[index];
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      MeditationDetailPage(katalizator: katalizator),
+                ),
               ),
-            ),
-            child: Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
-              ),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      katalizator.mainImage,
-                      fit: BoxFit.cover,
-                      height: 81,
-                      width: 81,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Flexible(
-                    child: FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            katalizator.title,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(height: 8.h),
-                          Text(
-                            '${katalizator.yogaPlans.length} Sessions',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
+              child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        katalizator.mainImage,
+                        fit: BoxFit.cover,
+                        height: 81,
+                        width: 81,
                       ),
                     ),
-                  )
-                ],
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: FittedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              katalizator.title,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              '${katalizator.yogaPlans.length} Sessions',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+      );
+    } else {
+      return const Center(
+        child: Text(
+          'not found',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -253,4 +278,5 @@ enum MaxiChai {
   Novice,
   Amateur,
   Professional,
+  none,
 }

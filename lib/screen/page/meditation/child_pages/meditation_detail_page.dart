@@ -1,10 +1,12 @@
 import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/child_pages/meditation_start_page.dart';
+import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MeditationDetailPage extends StatelessWidget {
-  const MeditationDetailPage({super.key});
+  const MeditationDetailPage({super.key, required this.katalizator});
+  final NoviceTabBar katalizator;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,90 +14,103 @@ class MeditationDetailPage extends StatelessWidget {
         title: const Text('MeditationDetailPage'),
         surfaceTintColor: Colors.transparent,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(13),
-              child: Image.asset(
-                AppImages.yogaOne,
+              child: Image.network(
+                katalizator.mainImage,
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'A course designed to introduce beginners to the calming effects of yoga. It includes simple stretching exercises, basic asanas, and relaxation techniques to relieve stress.',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            // Text(
+            //   katalizator.title,
+            //   style: const TextStyle(
+            //     fontSize: 15,
+            //     fontWeight: FontWeight.w400,
+            //   ),
+            // ),
             const SizedBox(height: 24),
             const Text(
-              'Lessons',
+              'Sessions',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 12),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MeditationStartPage()),
-                );
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 114,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: ListView.separated(
+                itemCount: katalizator.yogaPlans.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 12);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  final yoga = katalizator.yogaPlans[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MeditationStartPage(yoga),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 114,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+                      padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FittedBox(
-                            child: Text(
-                              '1. Welcome to Wellness',
-                              style: TextStyle(
-                                fontSize: 15.h,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FittedBox(
+                                  child: Text(
+                                    '${index + 1}. ${yoga.title}',
+                                    style: TextStyle(
+                                      fontSize: 15.h,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8.h),
+                                Flexible(
+                                  child: Text(
+                                    yoga.desciption,
+                                    style: TextStyle(
+                                      fontSize: 12.h,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 4,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 8.h),
-                          FittedBox(
-                            child: Text(
-                              'Begin your journey with an introduction\nto the basic principles of yoga,\nunderstanding the importance of breath\nand gentle movement to establish a foundation for wellness.,',
-                              style: TextStyle(
-                                fontSize: 12.h,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 4,
-                            ),
+                          const SizedBox(width: 16),
+                          Image.asset(
+                            AppImages.playIcon,
+                            height: 37.h,
+                            width: 37.w,
                           ),
                         ],
                       ),
                     ),
-                    Flexible(
-                      child: Image.asset(
-                        AppImages.playIcon,
-                        height: 37.h,
-                        width: 37.w,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            )
+            ),
           ],
         ),
       ),

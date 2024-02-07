@@ -15,6 +15,9 @@ class MeditationCubit extends Cubit<MeditationState> {
 
   List<ZarydkaModel> resultHallaa = [];
   List<ZarydkaModel> filterSearch = [];
+  List<NoviceTabBar> filterSearchNovice = [];
+  List<NoviceTabBar> filterSearchArmateur = [];
+  List<NoviceTabBar> filterSearchProfessional = [];
   Future<void> alyshKerek() async {
     emit(const MeditationState.loading());
     try {
@@ -29,11 +32,14 @@ class MeditationCubit extends Cubit<MeditationState> {
       ).toList();
       resultHallaa.addAll(listModel);
       // result.data.indexOf(e) < 2,
-      log('data: resultHallaa: $resultHallaa ');
       emit(
         MeditationState.success(
           models: resultHallaa,
           search: false,
+          filterSearchNovice: filterSearchNovice,
+          filterSearchArmateur: filterSearchArmateur,
+          filterSearchProfessional: filterSearchProfessional,
+          type: MaxiChai.none,
         ),
       );
     } catch (e) {
@@ -41,23 +47,88 @@ class MeditationCubit extends Cubit<MeditationState> {
     }
   }
 
-  isdooo(String text, MaxiChai type) {
-    // try {
-    //   if (text.isNotEmpty) {
-    //     filterSearch = resultHallaa[type.index].where((model) {
-    //       return model. title.toLowerCase().contains(text.toLowerCase());
-    //     }).toList();
-    //   } else {
-    //     filterSearch = resultHallaa;
-    //   }
-    //   emit(
-    //     MeditationState.success(
-    //       models: filterSearch,
-    //       search: text.isNotEmpty,
-    //     ),
-    //   );
-    // } catch (e) {
-    //   emit(MeditationState.error(e.toString()));
-    // }
+  // isdoooOld(String text, MaxiChai type) {
+  //   try {
+  //     if (text.isNotEmpty) {
+  //       filterSearch = resultHallaa.where((model) {
+  //         return model title.toLowerCase().contains(text.toLowerCase());
+  //       }).toList();
+  //     } else {
+  //       filterSearch = resultHallaa;
+  //     }
+  //     emit(
+  //       MeditationState.success(
+  //         models: filterSearch,
+  //         search: text.isNotEmpty,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     emit(MeditationState.error(e.toString()));
+  //   }
+  // }
+  isdooo(String text, MaxiChai type, List<ZarydkaModel> model) {
+    try {
+      if (text.isNotEmpty) {
+        switch (type) {
+          case MaxiChai.Novice:
+            filterSearchNovice = resultHallaa[type.index].novice.where((model) {
+              return model.title.toLowerCase().contains(
+                    text.toLowerCase(),
+                  );
+            }).toList();
+          case MaxiChai.Amateur:
+            filterSearchArmateur =
+                resultHallaa[type.index].amateur.where((model) {
+              return model.title.toLowerCase().contains(
+                    text.toLowerCase(),
+                  );
+            }).toList();
+          case MaxiChai.Professional:
+            filterSearchProfessional =
+                resultHallaa[type.index].professional.where((model) {
+              return model.title.toLowerCase().contains(
+                    text.toLowerCase(),
+                  );
+            }).toList();
+
+          default:
+        }
+        log('data: filterSearchNovice: $filterSearchNovice ');
+      } else {
+        filterSearch = resultHallaa;
+        filterSearchNovice = resultHallaa.first.novice;
+        filterSearchArmateur = resultHallaa[1].amateur;
+        filterSearchProfessional = resultHallaa[2].professional;
+      }
+
+      emit(
+        MeditationState.success(
+          models: [
+            ZarydkaModel(
+              novice: filterSearchNovice,
+              amateur: filterSearchArmateur,
+              professional: filterSearchProfessional,
+            ),
+            ZarydkaModel(
+              novice: filterSearchNovice,
+              amateur: filterSearchArmateur,
+              professional: filterSearchProfessional,
+            ),
+            ZarydkaModel(
+              novice: filterSearchNovice,
+              amateur: filterSearchArmateur,
+              professional: filterSearchProfessional,
+            ),
+          ],
+          search: text.isNotEmpty,
+          filterSearchNovice: filterSearchNovice,
+          filterSearchArmateur: filterSearchArmateur,
+          filterSearchProfessional: filterSearchProfessional,
+          type: type,
+        ),
+      );
+    } catch (e) {
+      emit(MeditationState.error(e.toString()));
+    }
   }
 }

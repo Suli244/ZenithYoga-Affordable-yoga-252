@@ -21,7 +21,7 @@ class MeditationDonePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const NewNotePage(
-                    noteType: NoteType.Yoga,
+                    noteType: NoteType.Meditation,
                   ),
                 ),
               );
@@ -54,7 +54,7 @@ class MeditationDonePage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Image.asset(
-                    AppImages.yogaTwo,
+                    AppImages.yogaTrhee,
                     fit: BoxFit.cover,
                   ),
                 ],
@@ -67,7 +67,7 @@ class MeditationDonePage extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   const Text(
-                    'Yoga Complete!',
+                    'Meditation Complete!',
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.w600,

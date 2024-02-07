@@ -92,21 +92,22 @@ class ZarydkaModel {
   int get hashCode =>
       novice.hashCode ^ amateur.hashCode ^ professional.hashCode;
 
- factory ZarydkaModel.fromJson(Map<String, dynamic> map) {
-  return ZarydkaModel(
-    novice: (map['novice'] as List<dynamic>?)
-        ?.map((x) => NoviceTabBar.fromMap(x))
-        .toList() ?? [],
-    amateur: (map['amateur'] as List<dynamic>?)
-        ?.map((x) => NoviceTabBar.fromMap(x))
-        .toList() ?? [],
-    professional: (map['professional'] as List<dynamic>?)
-        ?.map((x) => NoviceTabBar.fromMap(x))
-        .toList() ?? [],
-  );
-}
-
-   
+  factory ZarydkaModel.fromJson(Map<String, dynamic> map) {
+    return ZarydkaModel(
+      novice: (map['novice'] as List<dynamic>?)
+              ?.map((x) => NoviceTabBar.fromMap(x))
+              .toList() ??
+          [],
+      amateur: (map['amateur'] as List<dynamic>?)
+              ?.map((x) => NoviceTabBar.fromMap(x))
+              .toList() ??
+          [],
+      professional: (map['professional'] as List<dynamic>?)
+              ?.map((x) => NoviceTabBar.fromMap(x))
+              .toList() ??
+          [],
+    );
+  }
 }
 
 class NoviceTabBar {

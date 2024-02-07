@@ -20,7 +20,13 @@ mixin _$MeditationState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ZarydkaModel> models, bool search)
+    required TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)
         success,
     required TResult Function(dynamic e) error,
   }) =>
@@ -29,7 +35,14 @@ mixin _$MeditationState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ZarydkaModel> models, bool search)? success,
+    TResult? Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult? Function(dynamic e)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +50,14 @@ mixin _$MeditationState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ZarydkaModel> models, bool search)? success,
+    TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult Function(dynamic e)? error,
     required TResult orElse(),
   }) =>
@@ -127,7 +147,13 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ZarydkaModel> models, bool search)
+    required TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)
         success,
     required TResult Function(dynamic e) error,
   }) {
@@ -139,7 +165,14 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ZarydkaModel> models, bool search)? success,
+    TResult? Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult? Function(dynamic e)? error,
   }) {
     return initial?.call();
@@ -150,7 +183,14 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ZarydkaModel> models, bool search)? success,
+    TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult Function(dynamic e)? error,
     required TResult orElse(),
   }) {
@@ -242,7 +282,13 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ZarydkaModel> models, bool search)
+    required TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)
         success,
     required TResult Function(dynamic e) error,
   }) {
@@ -254,7 +300,14 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ZarydkaModel> models, bool search)? success,
+    TResult? Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult? Function(dynamic e)? error,
   }) {
     return loading?.call();
@@ -265,7 +318,14 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ZarydkaModel> models, bool search)? success,
+    TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult Function(dynamic e)? error,
     required TResult orElse(),
   }) {
@@ -323,7 +383,13 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ZarydkaModel> models, bool search});
+  $Res call(
+      {List<ZarydkaModel> models,
+      List<NoviceTabBar> filterSearchNovice,
+      List<NoviceTabBar> filterSearchArmateur,
+      List<NoviceTabBar> filterSearchProfessional,
+      MaxiChai type,
+      bool search});
 }
 
 /// @nodoc
@@ -338,6 +404,10 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? models = null,
+    Object? filterSearchNovice = null,
+    Object? filterSearchArmateur = null,
+    Object? filterSearchProfessional = null,
+    Object? type = null,
     Object? search = null,
   }) {
     return _then(_$SuccessImpl(
@@ -345,6 +415,22 @@ class __$$SuccessImplCopyWithImpl<$Res>
           ? _value._models
           : models // ignore: cast_nullable_to_non_nullable
               as List<ZarydkaModel>,
+      filterSearchNovice: null == filterSearchNovice
+          ? _value._filterSearchNovice
+          : filterSearchNovice // ignore: cast_nullable_to_non_nullable
+              as List<NoviceTabBar>,
+      filterSearchArmateur: null == filterSearchArmateur
+          ? _value._filterSearchArmateur
+          : filterSearchArmateur // ignore: cast_nullable_to_non_nullable
+              as List<NoviceTabBar>,
+      filterSearchProfessional: null == filterSearchProfessional
+          ? _value._filterSearchProfessional
+          : filterSearchProfessional // ignore: cast_nullable_to_non_nullable
+              as List<NoviceTabBar>,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MaxiChai,
       search: null == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
@@ -357,8 +443,16 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 class _$SuccessImpl implements Success {
   const _$SuccessImpl(
-      {required final List<ZarydkaModel> models, required this.search})
-      : _models = models;
+      {required final List<ZarydkaModel> models,
+      required final List<NoviceTabBar> filterSearchNovice,
+      required final List<NoviceTabBar> filterSearchArmateur,
+      required final List<NoviceTabBar> filterSearchProfessional,
+      required this.type,
+      required this.search})
+      : _models = models,
+        _filterSearchNovice = filterSearchNovice,
+        _filterSearchArmateur = filterSearchArmateur,
+        _filterSearchProfessional = filterSearchProfessional;
 
   final List<ZarydkaModel> _models;
   @override
@@ -368,12 +462,41 @@ class _$SuccessImpl implements Success {
     return EqualUnmodifiableListView(_models);
   }
 
+  final List<NoviceTabBar> _filterSearchNovice;
+  @override
+  List<NoviceTabBar> get filterSearchNovice {
+    if (_filterSearchNovice is EqualUnmodifiableListView)
+      return _filterSearchNovice;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filterSearchNovice);
+  }
+
+  final List<NoviceTabBar> _filterSearchArmateur;
+  @override
+  List<NoviceTabBar> get filterSearchArmateur {
+    if (_filterSearchArmateur is EqualUnmodifiableListView)
+      return _filterSearchArmateur;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filterSearchArmateur);
+  }
+
+  final List<NoviceTabBar> _filterSearchProfessional;
+  @override
+  List<NoviceTabBar> get filterSearchProfessional {
+    if (_filterSearchProfessional is EqualUnmodifiableListView)
+      return _filterSearchProfessional;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filterSearchProfessional);
+  }
+
+  @override
+  final MaxiChai type;
   @override
   final bool search;
 
   @override
   String toString() {
-    return 'MeditationState.success(models: $models, search: $search)';
+    return 'MeditationState.success(models: $models, filterSearchNovice: $filterSearchNovice, filterSearchArmateur: $filterSearchArmateur, filterSearchProfessional: $filterSearchProfessional, type: $type, search: $search)';
   }
 
   @override
@@ -382,12 +505,25 @@ class _$SuccessImpl implements Success {
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
             const DeepCollectionEquality().equals(other._models, _models) &&
+            const DeepCollectionEquality()
+                .equals(other._filterSearchNovice, _filterSearchNovice) &&
+            const DeepCollectionEquality()
+                .equals(other._filterSearchArmateur, _filterSearchArmateur) &&
+            const DeepCollectionEquality().equals(
+                other._filterSearchProfessional, _filterSearchProfessional) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.search, search) || other.search == search));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_models), search);
+      runtimeType,
+      const DeepCollectionEquality().hash(_models),
+      const DeepCollectionEquality().hash(_filterSearchNovice),
+      const DeepCollectionEquality().hash(_filterSearchArmateur),
+      const DeepCollectionEquality().hash(_filterSearchProfessional),
+      type,
+      search);
 
   @JsonKey(ignore: true)
   @override
@@ -400,11 +536,18 @@ class _$SuccessImpl implements Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ZarydkaModel> models, bool search)
+    required TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)
         success,
     required TResult Function(dynamic e) error,
   }) {
-    return success(models, search);
+    return success(models, filterSearchNovice, filterSearchArmateur,
+        filterSearchProfessional, type, search);
   }
 
   @override
@@ -412,10 +555,18 @@ class _$SuccessImpl implements Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ZarydkaModel> models, bool search)? success,
+    TResult? Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult? Function(dynamic e)? error,
   }) {
-    return success?.call(models, search);
+    return success?.call(models, filterSearchNovice, filterSearchArmateur,
+        filterSearchProfessional, type, search);
   }
 
   @override
@@ -423,12 +574,20 @@ class _$SuccessImpl implements Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ZarydkaModel> models, bool search)? success,
+    TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult Function(dynamic e)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(models, search);
+      return success(models, filterSearchNovice, filterSearchArmateur,
+          filterSearchProfessional, type, search);
     }
     return orElse();
   }
@@ -474,9 +633,17 @@ class _$SuccessImpl implements Success {
 abstract class Success implements MeditationState {
   const factory Success(
       {required final List<ZarydkaModel> models,
+      required final List<NoviceTabBar> filterSearchNovice,
+      required final List<NoviceTabBar> filterSearchArmateur,
+      required final List<NoviceTabBar> filterSearchProfessional,
+      required final MaxiChai type,
       required final bool search}) = _$SuccessImpl;
 
   List<ZarydkaModel> get models;
+  List<NoviceTabBar> get filterSearchNovice;
+  List<NoviceTabBar> get filterSearchArmateur;
+  List<NoviceTabBar> get filterSearchProfessional;
+  MaxiChai get type;
   bool get search;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
@@ -550,7 +717,13 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ZarydkaModel> models, bool search)
+    required TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)
         success,
     required TResult Function(dynamic e) error,
   }) {
@@ -562,7 +735,14 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ZarydkaModel> models, bool search)? success,
+    TResult? Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult? Function(dynamic e)? error,
   }) {
     return error?.call(e);
@@ -573,7 +753,14 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ZarydkaModel> models, bool search)? success,
+    TResult Function(
+            List<ZarydkaModel> models,
+            List<NoviceTabBar> filterSearchNovice,
+            List<NoviceTabBar> filterSearchArmateur,
+            List<NoviceTabBar> filterSearchProfessional,
+            MaxiChai type,
+            bool search)?
+        success,
     TResult Function(dynamic e)? error,
     required TResult orElse(),
   }) {

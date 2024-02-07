@@ -1,8 +1,10 @@
 import 'package:affordable_yoga_252/screen/page/meditation/child_pages/meditation_done_page.dart';
+import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_model.dart';
 import 'package:flutter/material.dart';
 
 class MeditationCompletePage extends StatelessWidget {
-  const MeditationCompletePage({super.key});
+  const MeditationCompletePage(this.yoga, {super.key});
+  final YogaPlans yoga;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,14 +13,12 @@ class MeditationCompletePage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MeditationDonePage(),
-            ),
-          );
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MeditationDonePage(),
+          ),
+        ),
         child: Container(
           height: 56,
           margin: const EdgeInsets.only(right: 16, left: 16),
@@ -38,106 +38,32 @@ class MeditationCompletePage extends StatelessWidget {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20)
+            .copyWith(bottom: 150),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome to Wellness',
-              style: TextStyle(
+              yoga.title,
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              '30 minutes',
-              style: TextStyle(
+              '${yoga.min} minutes',
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
-              '''Introduce new practitioners to the foundational concepts of yoga, emphasizing the connection between mind, body, and breath, and setting the stage for a transformative wellness journey.
-        
-        Introduction (5 minutes):
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Greetings and a brief overview of the course.
-        Discussion on the holistic benefits of yoga for stress relief and overall health.
-        Explanation of what to expect in the coming lessons.
-        Understanding Yoga (5 minutes):
-        A concise history and philosophy of yoga to give context to the practice.
-        Explanation of the eight limbs of yoga, with a focus on the Yamas and Niyamas, which guide the ethical and moral foundations.
-        Breath Awareness (5 minutes):
-        Introduction to Pranayama (yogic breathing).
-        Guided practice on observing the natural breath.
-        Techniques to deepen and slow down the breath, establishing a rhythmic pattern.''',
-              style: TextStyle(
+              yoga.desciption,
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
               ),
