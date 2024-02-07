@@ -55,7 +55,11 @@ class MeditationDetailPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MeditationStartPage(yoga),
+                          builder: (context) => MeditationStartPage(
+                            yoga,
+                            mainImage: katalizator.mainImage,
+                            group: katalizator.title,
+                          ),
                         ),
                       );
                     },

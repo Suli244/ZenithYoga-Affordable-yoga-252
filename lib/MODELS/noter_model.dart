@@ -13,14 +13,23 @@ class LoganXManChelovek {
   @HiveField(2)
   final DateTime dateTime;
 
+  @HiveField(3)
+  final String? group;
+
+  @HiveField(4)
+  final String? mainImage;
+
   LoganXManChelovek({
     required this.noteType,
     required this.mnogoTexta,
     required this.dateTime,
+    this.mainImage,
+    this.group,
   });
 
   @override
-  String toString() => 'LoganXManChelovek(noteType: $noteType, mnogoTexta: $mnogoTexta, dateTime: $dateTime)';
+  String toString() =>
+      'LoganXManChelovek(noteType: $noteType, mnogoTexta: $mnogoTexta, dateTime: $dateTime, mainImage: $mainImage, group: $group)';
 }
 
 @HiveType(typeId: 2)

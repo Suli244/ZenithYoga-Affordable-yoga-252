@@ -20,19 +20,25 @@ class LoganXManChelovekAdapter extends TypeAdapter<LoganXManChelovek> {
       noteType: fields[0] as NoteType,
       mnogoTexta: fields[1] as String,
       dateTime: fields[2] as DateTime,
+      mainImage: fields[4] as String?,
+      group: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, LoganXManChelovek obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.noteType)
       ..writeByte(1)
       ..write(obj.mnogoTexta)
       ..writeByte(2)
-      ..write(obj.dateTime);
+      ..write(obj.dateTime)
+      ..writeByte(3)
+      ..write(obj.group)
+      ..writeByte(4)
+      ..write(obj.mainImage);
   }
 
   @override

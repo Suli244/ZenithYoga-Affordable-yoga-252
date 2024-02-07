@@ -4,10 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class NewNotePage extends StatefulWidget {
-  const NewNotePage({super.key, required this.noteType,   this.currentIndex = 1});
+  const NewNotePage(
+      {super.key,
+      required this.noteType,
+      this.currentIndex = 1,
+      required this.mainImage,
+      required this.group});
 
   final NoteType noteType;
   final int currentIndex;
+  final String mainImage;
+  final String group;
 
   @override
   State<NewNotePage> createState() => _NewNotePageState();
@@ -135,6 +142,8 @@ class _NewNotePageState extends State<NewNotePage> {
                       noteType: NoteType.Yoga,
                       mnogoTexta: _descController.text,
                       dateTime: DateTime.now(),
+                      group: widget.group,
+                      mainImage: widget.mainImage,
                     );
                     var tayotaCrown = await Hive.openBox<LoganXManChelovek>(
                       'karakol',

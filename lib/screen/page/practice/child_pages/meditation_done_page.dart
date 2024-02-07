@@ -5,7 +5,13 @@ import 'package:affordable_yoga_252/screen/page/meditation/note_pages/new_note_p
 import 'package:flutter/material.dart';
 
 class MeditationDoneYogaPage extends StatelessWidget {
-  const MeditationDoneYogaPage({super.key});
+  const MeditationDoneYogaPage({
+    super.key,
+    required this.mainImage,
+    required this.group,
+  });
+  final String mainImage;
+  final String group;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +26,11 @@ class MeditationDoneYogaPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NewNotePage(
+                  builder: (context) => NewNotePage(
                     noteType: NoteType.Yoga,
                     currentIndex: 0,
+                    group: group,
+                    mainImage: mainImage,
                   ),
                 ),
               );

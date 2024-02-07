@@ -4,8 +4,11 @@ import 'package:affordable_yoga_252/screen/page/practice/child_pages/meditation_
 import 'package:flutter/material.dart';
 
 class MeditationStartYogaPage extends StatelessWidget {
-  const MeditationStartYogaPage(this.yoga, {super.key});
+  const MeditationStartYogaPage(this.yoga,
+      {super.key, required this.mainImage, required this.group});
   final YogaPlans yoga;
+  final String mainImage;
+  final String group;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +18,11 @@ class MeditationStartYogaPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MeditationCompleteYogaPage(yoga),
+              builder: (context) => MeditationCompleteYogaPage(
+                yoga,
+                mainImage: mainImage,
+                group: group,
+              ),
             ),
           );
         },
