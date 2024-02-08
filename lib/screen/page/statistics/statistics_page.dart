@@ -52,20 +52,24 @@ class _StatisticsPageState extends State<StatisticsPage> {
   bool showAvg = false;
 
   List<List<LoganXManChelovek>> result = [];
-  List<FlSpot> days = [];
-  List<FlSpot> weeks = [];
-  List<FlSpot> months = [];
+  List<FlSpot> days = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
+  List<FlSpot> weeks = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
+  List<FlSpot> months = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
   late Box<LoganXManChelovek> box;
 
   @override
   void initState() {
     super.initState();
-    initBox();
+    initData();
+  }
+
+  Future initData() async {
+    await initBox();
     getNotes();
     initFlSpot();
   }
 
-  initFlSpot() {
+  initFlSpot() async {
     final noterModel = box.values.toList();
     if (noterModel.isNotEmpty) {
       DateTime today = DateTime.now();
@@ -89,7 +93,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               element.dateTime.day.toDouble(), Random().nextDouble() * 5 + 1));
         }
       }
-      print('days $days weeks $weeks');
+      print('days $days weeks $weeks months $months');
     }
   }
 
@@ -130,241 +134,258 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ValueListenableBuilder(
-          valueListenable: box.listenable(),
-          builder: (context, value, child) {
-            // getNotes();
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Statistics',
-                      style: TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff0D0F45)),
-                    ),
-                    const SizedBox(height: 24),
-                    AspectRatio(
-                      aspectRatio: 2,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white),
+      child: FutureBuilder(
+          future: initBox(),
+          builder: (context, snapShot) {
+            print('snapShot.connectionState ${snapShot.connectionState}');
+            if (snapShot.connectionState == ConnectionState.done) {
+              return ValueListenableBuilder(
+                  valueListenable: box.listenable(),
+                  builder: (context, value, child) {
+                    // getNotes();
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  'Calories Statistics',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff5C5E8B)),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      indexChart = 0;
-                                    });
-                                  },
-                                  child: Text(
-                                    'Daily',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: indexChart == 0
-                                            ? const Color(0xffA65EEF)
-                                            : const Color(0xff5C5E8B)),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      indexChart = 1;
-                                    });
-                                  },
-                                  child: Text(
-                                    'Weekly',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: indexChart == 1
-                                            ? const Color(0xffA65EEF)
-                                            : const Color(0xff5C5E8B)),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      indexChart = 2;
-                                    });
-                                  },
-                                  child: Text(
-                                    'Monthly',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: indexChart == 2
-                                            ? const Color(0xffA65EEF)
-                                            : const Color(0xff5C5E8B)),
-                                  ),
-                                ),
-                              ],
+                          children: <Widget>[
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Statistics',
+                              style: TextStyle(
+                                  fontSize: 34,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff0D0F45)),
                             ),
-                            const SizedBox(height: 22),
-                            Expanded(
-                              child: result.isEmpty
-                                  ? Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            'assets/images/statistic_icon.png'),
-                                        const SizedBox(width: 12),
-                                        const Expanded(
-                                          child: Text(
-                                              'You haven\'t done yoga or meditation yet. So we can\'t count calories, do any of these things to get statistics.',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff5C5E8B),
-                                                fontSize: 15,
-                                              )),
-                                        ),
-                                      ],
-                                    )
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                            const SizedBox(height: 24),
+                            AspectRatio(
+                              aspectRatio: 2,
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.white),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
                                       children: [
                                         const Text(
-                                          '22,634.45 kcal',
+                                          'Calories Statistics',
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
-                                              color: Color(0xffCC2FDA)),
+                                              color: Color(0xff5C5E8B)),
                                         ),
-                                        const SizedBox(height: 8),
-                                        Expanded(
-                                          child: LineChart(
-                                            indexChart == 0
-                                                ? day()
-                                                : indexChart == 1
-                                                    ? week()
-                                                    : month(),
+                                        const Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              indexChart = 0;
+                                            });
+                                          },
+                                          child: Text(
+                                            'Daily',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: indexChart == 0
+                                                    ? const Color(0xffA65EEF)
+                                                    : const Color(0xff5C5E8B)),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              indexChart = 1;
+                                            });
+                                          },
+                                          child: Text(
+                                            'Weekly',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: indexChart == 1
+                                                    ? const Color(0xffA65EEF)
+                                                    : const Color(0xff5C5E8B)),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              indexChart = 2;
+                                            });
+                                          },
+                                          child: Text(
+                                            'Monthly',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: indexChart == 2
+                                                    ? const Color(0xffA65EEF)
+                                                    : const Color(0xff5C5E8B)),
                                           ),
                                         ),
                                       ],
                                     ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Latest Practices',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff5C5E8B),
-                        fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    result.isEmpty
-                        ? Container(
-                            margin: EdgeInsets.only(top: 100.h),
-                            child: const Center(
-                              child: Text(
-                                'Latest Practices',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff5C5E8B),
-                                  fontSize: 15,
+                                    const SizedBox(height: 22),
+                                    Expanded(
+                                      child: result.isEmpty
+                                          ? Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                    'assets/images/statistic_icon.png'),
+                                                const SizedBox(width: 12),
+                                                const Expanded(
+                                                  child: Text(
+                                                      'You haven\'t done yoga or meditation yet. So we can\'t count calories, do any of these things to get statistics.',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xff5C5E8B),
+                                                        fontSize: 15,
+                                                      )),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  '22,634.45 kcal',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color(0xffCC2FDA)),
+                                                ),
+                                                const SizedBox(height: 8),
+                                                Expanded(
+                                                  child: LineChart(
+                                                    indexChart == 0
+                                                        ? day()
+                                                        : indexChart == 1
+                                                            ? week()
+                                                            : month(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                          )
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                // onTap: () => Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         MeditationDetailPage(katalizator: katalizator),
-                                //   ),
-                                // ),
-                                child: Container(
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                  ),
-                                  padding: const EdgeInsets.all(16),
-                                  child: Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.network(
-                                          result[index][0].mainImage!,
-                                          fit: BoxFit.cover,
-                                          height: 81,
-                                          width: 81,
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Latest Practices',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff5C5E8B),
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            result.isEmpty
+                                ? Container(
+                                    margin: EdgeInsets.only(top: 100.h),
+                                    child: const Center(
+                                      child: Text(
+                                        'Latest Practices',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff5C5E8B),
+                                          fontSize: 15,
                                         ),
                                       ),
-                                      const SizedBox(width: 16),
-                                      Flexible(
-                                        child: FittedBox(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                    ),
+                                  )
+                                : ListView.separated(
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        // onTap: () => Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         MeditationDetailPage(katalizator: katalizator),
+                                        //   ),
+                                        // ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.white,
+                                          ),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Row(
                                             children: [
-                                              Text(
-                                                result[index][0].group!,
-                                                style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w600,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: Image.network(
+                                                  result[index][0].mainImage!,
+                                                  fit: BoxFit.cover,
+                                                  height: 81,
+                                                  width: 81,
                                                 ),
                                               ),
-                                              SizedBox(height: 8.h),
-                                              Text(
-                                                '${result[index].length} Sessions',
-                                                style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w400,
+                                              const SizedBox(width: 16),
+                                              Flexible(
+                                                child: FittedBox(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        result[index][0].group!,
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8.h),
+                                                      Text(
+                                                        '${result[index].length} Sessions',
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
+                                              )
                                             ],
                                           ),
                                         ),
-                                      )
-                                    ],
+                                      );
+                                    },
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(height: 12),
+                                    itemCount: result.length,
                                   ),
-                                ),
-                              );
-                            },
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemCount: result.length,
-                          ),
-                    const SizedBox(height: 24)
-                  ],
-                ),
-              ),
-            );
+                            const SizedBox(height: 24)
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            }
+            return const SizedBox();
           }),
     );
   }
@@ -420,22 +441,22 @@ class _StatisticsPageState extends State<StatisticsPage> {
       case 1:
         text = const Text('1', style: style);
         break;
-      case 2:
+      case 5:
         text = const Text('5', style: style);
         break;
-      case 3:
+      case 10:
         text = const Text('10', style: style);
         break;
-      case 4:
+      case 15:
         text = const Text('15', style: style);
         break;
-      case 5:
+      case 20:
         text = const Text('20', style: style);
         break;
-      case 6:
+      case 25:
         text = const Text('25', style: style);
         break;
-      case 7:
+      case 30:
         text = const Text('30', style: style);
         break;
       default:
@@ -460,22 +481,22 @@ class _StatisticsPageState extends State<StatisticsPage> {
       case 1:
         text = const Text('00:00', style: style);
         break;
-      case 4:
+      case 5:
         text = const Text('04:00', style: style);
         break;
-      case 8:
+      case 9:
         text = const Text('08:00', style: style);
         break;
-      case 12:
+      case 13:
         text = const Text('12:00', style: style);
         break;
-      case 16:
+      case 17:
         text = const Text('16:00', style: style);
         break;
-      case 20:
+      case 21:
         text = const Text('20:00', style: style);
         break;
-      case 24:
+      case 25:
         text = const Text('24:00', style: style);
         break;
       default:
@@ -516,9 +537,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
     return LineChartData(
       gridData: FlGridData(
         show: false,
-        drawVerticalLine: true,
+        drawVerticalLine: false,
         horizontalInterval: 1,
         verticalInterval: 1,
+        drawHorizontalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: Colors.amber,
@@ -563,7 +585,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       //   border: Border.all(color: const Color(0xff37434d)),
       // ),
       minX: 0.5,
-      maxX: 10,
+      maxX: 30.5,
       minY: 0,
       maxY: 6,
       lineBarsData: [
@@ -727,7 +749,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       //   border: Border.all(color: const Color(0xff37434d)),
       // ),
       minX: 0.5,
-      maxX: 24.5,
+      maxX: 25.5,
       minY: 0,
       maxY: 6,
       lineBarsData: [
