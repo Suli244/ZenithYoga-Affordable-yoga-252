@@ -14,7 +14,7 @@ class MeditationDetailPage extends StatelessWidget {
         title: const Text('MeditationDetailPage'),
         surfaceTintColor: Colors.transparent,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,79 +42,87 @@ class MeditationDetailPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Expanded(
-              child: ListView.separated(
-                itemCount: katalizator.yogaPlans.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 12);
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  final yoga = katalizator.yogaPlans[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MeditationStartPage(
-                            yoga,
-                            mainImage: katalizator.mainImage,
-                            group: katalizator.title,
+            ...List.generate(
+              katalizator.yogaPlans.length,
+              (index) {
+                final yoga = katalizator.yogaPlans[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MeditationStartPage(
+                          yoga,
+                          mainImage: katalizator.mainImage,
+                          group: katalizator.title,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    width: MediaQuery.of(context).size.width,
+                    height: 114,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                  '${index + 1}. ${yoga.title}',
+                                  style: TextStyle(
+                                    fontSize: 15.h,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Flexible(
+                                child: Text(
+                                  yoga.desciption,
+                                  style: TextStyle(
+                                    fontSize: 12.h,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 114,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                      ),
-                      padding: const EdgeInsets.all(16).copyWith(bottom: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FittedBox(
-                                  child: Text(
-                                    '${index + 1}. ${yoga.title}',
-                                    style: TextStyle(
-                                      fontSize: 15.h,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                Flexible(
-                                  child: Text(
-                                    yoga.desciption,
-                                    style: TextStyle(
-                                      fontSize: 12.h,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 4,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Image.asset(
-                            AppImages.playIcon,
-                            height: 37.h,
-                            width: 37.w,
-                          ),
-                        ],
-                      ),
+                        const SizedBox(width: 16),
+                        Image.asset(
+                          AppImages.playIcon,
+                          height: 37.h,
+                          width: 37.w,
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
+                );
+              },
+            )
+            // Expanded(
+            //   child: ListView.separated(
+            //     itemCount: katalizator.yogaPlans.length,
+            //     separatorBuilder: (BuildContext context, int index) {
+            //       return const SizedBox(height: 12);
+            //     },
+            //     itemBuilder: (BuildContext context, int index) {
+            //       final yoga = katalizator.yogaPlans[index];
+            //       return
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

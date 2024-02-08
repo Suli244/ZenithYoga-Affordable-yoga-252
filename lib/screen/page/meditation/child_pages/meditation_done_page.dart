@@ -27,9 +27,9 @@ class MeditationDonePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => NewNotePage(
-                    noteType: NoteType.Meditation,
-                    mainImage: mainImage,
+                    noteType: NoteType.Yoga,
                     group: group,
+                    mainImage: mainImage,
                   ),
                 ),
               );
@@ -70,7 +70,7 @@ class MeditationDonePage extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 250),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [

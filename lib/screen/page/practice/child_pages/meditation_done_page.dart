@@ -71,7 +71,7 @@ class MeditationDoneYogaPage extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 250),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [

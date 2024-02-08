@@ -1,6 +1,7 @@
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
 import 'package:affordable_yoga_252/screen/bottom_navigation_bar/bottom_naviator_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 
 class NewNotePage extends StatefulWidget {
@@ -139,7 +140,7 @@ class _NewNotePageState extends State<NewNotePage> {
                 onTap: () async {
                   if (_formKey.currentState?.validate() == true) {
                     final arnold = LoganXManChelovek(
-                      noteType: NoteType.Yoga,
+                      noteType: widget.noteType,
                       mnogoTexta: _descController.text,
                       dateTime: DateTime.now(),
                       group: widget.group,
@@ -179,6 +180,7 @@ class _NewNotePageState extends State<NewNotePage> {
                   ),
                 ),
               ),
+              SizedBox(height: 20.h),
             ],
           ),
         ),
