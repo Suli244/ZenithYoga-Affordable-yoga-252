@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +51,46 @@ class _StatisticsPageState extends State<StatisticsPage> {
   int indexChart = 1;
   bool showAvg = false;
 
-  List<LoganXManChelovek> list = [];
   List<List<LoganXManChelovek>> result = [];
+  List<FlSpot> days = [];
+  List<FlSpot> weeks = [];
+  List<FlSpot> months = [];
   late Box<LoganXManChelovek> box;
 
   @override
   void initState() {
     super.initState();
     initBox();
+    getNotes();
+    initFlSpot();
+  }
+
+  initFlSpot() {
+    final noterModel = box.values.toList();
+    if (noterModel.isNotEmpty) {
+      DateTime today = DateTime.now();
+      DateTime monday = today.subtract(Duration(days: today.weekday - 1));
+      DateTime sunday = today.add(Duration(days: 7 - today.weekday));
+      for (var element in noterModel) {
+        if (element.dateTime.day == today.day) {
+          days.add(FlSpot(
+              element.dateTime.hour.toDouble() +
+                  (element.dateTime.minute.toDouble() / 100),
+              Random().nextDouble() * 5 + 1));
+        }
+        if (element.dateTime
+                .isAfter(monday.subtract(const Duration(days: 1))) &&
+            element.dateTime.isBefore(sunday.add(const Duration(days: 1)))) {
+          weeks.add(FlSpot(element.dateTime.weekday.toDouble(),
+              Random().nextDouble() * 5 + 1));
+        }
+        if (element.dateTime.month == today.month) {
+          months.add(FlSpot(
+              element.dateTime.day.toDouble(), Random().nextDouble() * 5 + 1));
+        }
+      }
+      print('days $days weeks $weeks');
+    }
   }
 
   Future initBox() async {
@@ -65,7 +99,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
     } else {
       box = await Hive.openBox<LoganXManChelovek>('karakol');
     }
-    getNotes();
+
     return box;
   }
 
@@ -102,188 +136,233 @@ class _StatisticsPageState extends State<StatisticsPage> {
             // getNotes();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Statistics',
-                    style: TextStyle(
-                        fontSize: 34,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff0D0F45)),
-                  ),
-                  const SizedBox(height: 24),
-                  AspectRatio(
-                    aspectRatio: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Calories Statistics',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xff5C5E8B)),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    indexChart = 0;
-                                  });
-                                },
-                                child: Text(
-                                  'Daily',
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Statistics',
+                      style: TextStyle(
+                          fontSize: 34,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff0D0F45)),
+                    ),
+                    const SizedBox(height: 24),
+                    AspectRatio(
+                      aspectRatio: 2,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  'Calories Statistics',
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: indexChart == 0
-                                          ? const Color(0xffA65EEF)
-                                          : const Color(0xff5C5E8B)),
+                                      color: Color(0xff5C5E8B)),
                                 ),
-                              ),
-                              const SizedBox(width: 12),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    indexChart = 1;
-                                  });
-                                },
-                                child: Text(
-                                  'Weekly',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: indexChart == 1
-                                          ? const Color(0xffA65EEF)
-                                          : const Color(0xff5C5E8B)),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      indexChart = 0;
+                                    });
+                                  },
+                                  child: Text(
+                                    'Daily',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: indexChart == 0
+                                            ? const Color(0xffA65EEF)
+                                            : const Color(0xff5C5E8B)),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 12),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    indexChart = 2;
-                                  });
-                                },
-                                child: Text(
-                                  'Monthly',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: indexChart == 2
-                                          ? const Color(0xffA65EEF)
-                                          : const Color(0xff5C5E8B)),
+                                const SizedBox(width: 12),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      indexChart = 1;
+                                    });
+                                  },
+                                  child: Text(
+                                    'Weekly',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: indexChart == 1
+                                            ? const Color(0xffA65EEF)
+                                            : const Color(0xff5C5E8B)),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 22),
-                          const Text(
-                            '22,634.45 kcal',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xffCC2FDA)),
-                          ),
-                          const SizedBox(height: 8),
-                          Expanded(
-                            child: LineChart(
-                              indexChart == 0
-                                  ? day()
-                                  : indexChart == 1
-                                      ? week()
-                                      : month(),
+                                const SizedBox(width: 12),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      indexChart = 2;
+                                    });
+                                  },
+                                  child: Text(
+                                    'Monthly',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: indexChart == 2
+                                            ? const Color(0xffA65EEF)
+                                            : const Color(0xff5C5E8B)),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 22),
+                            Expanded(
+                              child: result.isEmpty
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                            'assets/images/statistic_icon.png'),
+                                        const SizedBox(width: 12),
+                                        const Expanded(
+                                          child: Text(
+                                              'You haven\'t done yoga or meditation yet. So we can\'t count calories, do any of these things to get statistics.',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xff5C5E8B),
+                                                fontSize: 15,
+                                              )),
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          '22,634.45 kcal',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xffCC2FDA)),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Expanded(
+                                          child: LineChart(
+                                            indexChart == 0
+                                                ? day()
+                                                : indexChart == 1
+                                                    ? week()
+                                                    : month(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Latest Practices',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff5C5E8B),
-                      fontSize: 15,
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Latest Practices',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff5C5E8B),
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  ListView.separated(
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        // onTap: () => Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         MeditationDetailPage(katalizator: katalizator),
-                        //   ),
-                        // ),
-                        child: Container(
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  result[index][0].mainImage!,
-                                  fit: BoxFit.cover,
-                                  height: 81,
-                                  width: 81,
+                    const SizedBox(height: 12),
+                    result.isEmpty
+                        ? Container(
+                            margin: EdgeInsets.only(top: 100.h),
+                            child: const Center(
+                              child: Text(
+                                'Latest Practices',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff5C5E8B),
+                                  fontSize: 15,
                                 ),
                               ),
-                              const SizedBox(width: 16),
-                              Flexible(
-                                child: FittedBox(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            ),
+                          )
+                        : ListView.separated(
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                // onTap: () => Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         MeditationDetailPage(katalizator: katalizator),
+                                //   ),
+                                // ),
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.white,
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
                                     children: [
-                                      Text(
-                                        result[index][0].group!,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.network(
+                                          result[index][0].mainImage!,
+                                          fit: BoxFit.cover,
+                                          height: 81,
+                                          width: 81,
                                         ),
                                       ),
-                                      SizedBox(height: 8.h),
-                                      Text(
-                                        '${result[index].length} Sessions',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
+                                      const SizedBox(width: 16),
+                                      Flexible(
+                                        child: FittedBox(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                result[index][0].group!,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Text(
+                                                '${result[index].length} Sessions',
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                 ),
-                              )
-                            ],
+                              );
+                            },
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 12),
+                            itemCount: result.length,
                           ),
-                        ),
-                      );
-                    },
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 12),
-                    itemCount: result.length,
-                  )
-                ],
+                    const SizedBox(height: 24)
+                  ],
+                ),
               ),
             );
           }),
@@ -489,15 +568,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0.5, 5),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
+          spots: months,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
@@ -579,15 +650,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0.5, 5),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            // FlSpot(6.8, 3.1),
-            // FlSpot(8, 4),
-            // FlSpot(9.5, 3),
-            // FlSpot(11, 4),
-          ],
+          spots: weeks,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
@@ -669,15 +732,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0.5, 5),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            // FlSpot(6.8, 3.1),
-            // FlSpot(8, 4),
-            // FlSpot(9.5, 3),
-            // FlSpot(11, 4),
-          ],
+          spots: days,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
