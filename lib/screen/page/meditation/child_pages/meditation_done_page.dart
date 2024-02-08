@@ -27,7 +27,7 @@ class MeditationDonePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => NewNotePage(
-                    noteType: NoteType.Yoga,
+                    noteType: NoteType.Meditation,
                     group: group,
                     mainImage: mainImage,
                   ),

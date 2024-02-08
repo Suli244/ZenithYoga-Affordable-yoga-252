@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
 import 'package:affordable_yoga_252/screen/page/notes/add_new_note_page.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,8 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState();
+    yoga = [];
+    meditation = [];
     initBox();
   }
 
@@ -34,6 +38,7 @@ class _NotesPageState extends State<NotesPage> {
 
   getNotes() async {
     final noterModel = box.values.toList();
+    log('data: noterModel: $noterModel ');
     if (noterModel.isNotEmpty) {
       for (var element in noterModel) {
         if (element.noteType == NoteType.Yoga) {
