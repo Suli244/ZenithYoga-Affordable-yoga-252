@@ -24,6 +24,7 @@ class _NotesPageState extends State<NotesPage> {
     yoga = [];
     meditation = [];
     initBox();
+    getNotes();
   }
 
   Future initBox() async {
@@ -32,7 +33,6 @@ class _NotesPageState extends State<NotesPage> {
     } else {
       box = await Hive.openBox<LoganXManChelovek>('karakol');
     }
-    getNotes();
     return box;
   }
 
@@ -45,6 +45,7 @@ class _NotesPageState extends State<NotesPage> {
           yoga.add(element);
         } else {
           meditation.add(element);
+          log('meditation $meditation');
         }
       }
     }
@@ -211,7 +212,8 @@ class _NotesPageState extends State<NotesPage> {
                                               FittedBox(
                                                 child: Text(
                                                   DateFormat('MMMMd').format(
-                                                      yoga[index].dateTime),
+                                                      meditation[index]
+                                                          .dateTime),
                                                   style: TextStyle(
                                                     fontSize: 15.h,
                                                     fontWeight: FontWeight.w400,
@@ -221,7 +223,7 @@ class _NotesPageState extends State<NotesPage> {
                                               SizedBox(height: 8.h),
                                               Flexible(
                                                 child: Text(
-                                                  yoga[index].mnogoTexta,
+                                                  meditation[index].mnogoTexta,
                                                   style: TextStyle(
                                                     fontSize: 12.h,
                                                     fontWeight: FontWeight.w500,
