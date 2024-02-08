@@ -5,6 +5,7 @@ import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_mod
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MeditationPage extends StatefulWidget {
   const MeditationPage({super.key});
@@ -19,14 +20,22 @@ class _MeditationPageState extends State<MeditationPage> {
   @override
   void initState() {
     context.read<MeditationCubit>().alyshKerek();
+    getAkcha();
     super.initState();
+  }
+
+  bool toOpen = true;
+
+  getAkcha() async {
+    final prefs = await SharedPreferences.getInstance();
+    toOpen = prefs.getBool('ISBUY') ?? false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: BlocBuilder<MeditationCubit, MeditationState>(
             builder: (context, state) {
@@ -35,8 +44,15 @@ class _MeditationPageState extends State<MeditationPage> {
                   return const SizedBox.shrink();
                 },
                 loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
+                  return Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.45,
+                        ),
+                        const CircularProgressIndicator.adaptive(),
+                      ],
+                    ),
                   );
                 },
                 success: (meditations, novice, armateur, professional, type,
@@ -101,7 +117,7 @@ class _MeditationPageState extends State<MeditationPage> {
                       ),
                       const SizedBox(height: 24),
                       if (meditations.isNotEmpty)
-                        getTab(meditations[_chai.index])
+                        getTab(meditations[_chai.index], toOpen)
                     ],
                   );
                 },
@@ -124,7 +140,7 @@ class _MeditationPageState extends State<MeditationPage> {
     );
   }
 
-  Widget getTab(ZarydkaModel model) {
+  Widget getTab(ZarydkaModel model, bool hahaha) {
     switch (_chai) {
       case MaxiChai.Amateur:
         return BodyList(
@@ -132,6 +148,7 @@ class _MeditationPageState extends State<MeditationPage> {
         );
       case MaxiChai.Professional:
         return BodyList(
+          hahaha: hahaha,
           novice: model.professional,
         );
       default:
@@ -149,79 +166,103 @@ class _MeditationPageState extends State<MeditationPage> {
 }
 
 class BodyList extends StatelessWidget {
-  const BodyList({super.key, required this.novice});
+  const BodyList({super.key, required this.novice, this.hahaha = true});
   final List<NoviceTabBar> novice;
+  final bool hahaha;
 
   @override
   Widget build(BuildContext context) {
-    if (novice.isNotEmpty) {
-      return Expanded(
-        child: ListView.separated(
-          itemCount: novice.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(
-              height: 12,
-            );
-          },
-          itemBuilder: (BuildContext context, int index) {
-            final katalizator = novice[index];
-            return GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      MeditationDetailPage(katalizator: katalizator),
-                ),
+    if (novice.isNotEmpty && hahaha) {
+      return Column(
+        children: List.generate(novice.length, (index) {
+          final katalizator = novice[index];
+          return GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    MeditationDetailPage(katalizator: katalizator),
               ),
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        katalizator.mainImage,
-                        fit: BoxFit.cover,
-                        height: 81,
-                        width: 81,
+            ),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              width: double.infinity,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      katalizator.mainImage,
+                      fit: BoxFit.cover,
+                      height: 81,
+                      width: 81,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Flexible(
+                    child: FittedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            katalizator.title,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            '${katalizator.yogaPlans.length} Sessions',
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Flexible(
-                      child: FittedBox(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              katalizator.title,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              '${katalizator.yogaPlans.length} Sessions',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-            );
-          },
+            ),
+          );
+        }),
+      );
+    } else if (!hahaha) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              AppImages.premium,
+              scale: 6.5,
+            ),
+            const Text(
+              'NEED PREMIUM',
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff5C5E8B),
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'This category requires Premium',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff5C5E8B),
+              ),
+            ),
+          ],
         ),
       );
     } else {
