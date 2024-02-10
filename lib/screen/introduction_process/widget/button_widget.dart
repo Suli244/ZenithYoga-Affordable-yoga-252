@@ -53,7 +53,7 @@ class ButtonWidget extends StatelessWidget {
             color: colorBorder ?? color,
           ),
         ),
-        child: Text(
+        child: isLoading ? CircularProgressIndicator.adaptive() :  Text(
           text!,
           textAlign: TextAlign.center,
           style: TextStyle(

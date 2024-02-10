@@ -1,5 +1,4 @@
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
-import 'package:affordable_yoga_252/core/urls.dart';
 import 'package:affordable_yoga_252/screen/start/start_screen.dart';
 import 'package:apphud/apphud.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Apphud.start(apiKey: DocFFAffordableYoga.apphudApiKey);
+  await Apphud.start(apiKey: 'app_t2G9uF7zScnPPXEw2cHv6DQ3ts872w');
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Hive.initFlutter();
   Hive.registerAdapter(LoganXManChelovekAdapter());

@@ -5,8 +5,11 @@ import 'package:affordable_yoga_252/screen/bottom_navigation_bar/bottom_naviator
 import 'package:affordable_yoga_252/screen/exclusive/widget/rest_widgets.dart';
 import 'package:affordable_yoga_252/screen/introduction_process/widget/button_widget.dart';
 import 'package:affordable_yoga_252/screen/page/configuration/widget/web_view_insightful_news.dart';
+import 'package:apphud/apphud.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ExclusiveScreen extends StatefulWidget {
   const ExclusiveScreen({super.key, this.isClose = false});
@@ -18,7 +21,7 @@ class ExclusiveScreen extends StatefulWidget {
 }
 
 class _ExclusiveScreenState extends State<ExclusiveScreen> {
-  bool toLoad = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -103,17 +106,87 @@ class _ExclusiveScreenState extends State<ExclusiveScreen> {
                   ButtonWidget(
                     color: const Color(0xffCC2FDA),
                     onPress: () async {
-                      await WebPremiumAffordableYoga.setPremium();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const BottomNavigatorScreen(),
-                        ),
-                        (route) => false,
+                      setState(() {
+                        isLoading = true;
+                      });
+                      final apphudPaywalls = await Apphud.paywalls();
+                      print(apphudPaywalls);
+
+                      await Apphud.purchase(
+                        product: apphudPaywalls?.paywalls.first.products?.first,
+                      ).whenComplete(
+                        () async {
+                          if (await Apphud.hasPremiumAccess() ||
+                              await Apphud.hasActiveSubscription()) {
+                            final hasPremiumAccess =
+                                await Apphud.hasPremiumAccess();
+                            final hasActiveSubscription =
+                                await Apphud.hasActiveSubscription();
+                            if (hasPremiumAccess || hasActiveSubscription) {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setBool('ISBUY', true);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CupertinoAlertDialog(
+                                  title: const Text('Success!'),
+                                  content: const Text(
+                                      'Your purchase has been restored!'),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      isDefaultAction: true,
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const BottomNavigatorScreen(),
+                                          ),
+                                          (route) => false,
+                                        );
+                                      },
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CupertinoAlertDialog(
+                                  title: const Text('Restore purchase'),
+                                  content: const Text(
+                                      'Your purchase is not found. Write to support: https://docs.google.com/forms/d/e/1FAIpQLSe2dY5sixywVpTYU9K34aEqYi67rDquTx9XMeDZWeU2de_rag/viewform?usp=sf_link'),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      isDefaultAction: true,
+                                      onPressed: () =>
+                                          {Navigator.of(context).pop()},
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const BottomNavigatorScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          }
+                        },
                       );
-                      setState(() {});
+                      setState(() {
+                        isLoading = false;
+                      });
                     },
                     text: 'BUY PREMIUM FOR \$0,99',
+                    isLoading: isLoading,
                     radius: 12,
                     height: 72.h,
                   ),
@@ -141,7 +214,10 @@ class _ExclusiveScreenState extends State<ExclusiveScreen> {
                         ),
                       );
                     },
-                    onPressRestorePurchases: () {},
+                    onPressRestorePurchases: () {
+                      WebPremiumAffordableYoga
+                          .buyTradeFuncRestoreAffordableYoga(context);
+                    },
                   ),
                 ],
               ),

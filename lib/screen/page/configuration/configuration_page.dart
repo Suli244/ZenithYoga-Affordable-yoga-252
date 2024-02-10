@@ -73,9 +73,28 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
                     ),
                   );
                 }),
-            ConfigurationItemWidget(titl: 'Support', onTaab: () {}),
+            ConfigurationItemWidget(
+              titl: 'Support',
+              onTaab: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WebFFAffordableYoga(
+                      title: 'Support',
+                      url: DocFFAffordableYoga.s,
+                    ),
+                  ),
+                );
+              },
+            ),
             if (!isPremActi)
-              ConfigurationItemWidget(titl: 'Restore purchases', onTaab: () {}),
+              ConfigurationItemWidget(
+                titl: 'Restore purchases',
+                onTaab: () {
+                  WebPremiumAffordableYoga.buyTradeFuncRestoreAffordableYoga(
+                      context);
+                },
+              ),
             const Spacer(),
             if (!isPremActi)
               ButtonWidget(
