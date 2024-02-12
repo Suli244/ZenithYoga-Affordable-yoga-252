@@ -2,6 +2,8 @@ import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/child_pages/meditation_detail_page.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/cubit/meditation_cubit.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -197,8 +199,10 @@ class BodyList extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      katalizator.mainImage,
+                    child: CachedNetworkImage(
+                      imageUrl: katalizator.mainImage,
+                      placeholder: (context, url) =>
+                          const Center(child: CupertinoActivityIndicator()),
                       fit: BoxFit.cover,
                       height: 81,
                       width: 81,
