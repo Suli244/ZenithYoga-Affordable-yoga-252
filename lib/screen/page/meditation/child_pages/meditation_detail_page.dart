@@ -1,6 +1,8 @@
 import 'package:affordable_yoga_252/core/image/app_images.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/child_pages/meditation_start_page.dart';
 import 'package:affordable_yoga_252/screen/page/meditation/models/meditation_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,8 +23,10 @@ class MeditationDetailPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(13),
-              child: Image.network(
-                katalizator.mainImage,
+              child: CachedNetworkImage(
+                imageUrl: katalizator.mainImage,
+                placeholder: (context, url) =>
+                    const Center(child: CupertinoActivityIndicator()),
               ),
             ),
             const SizedBox(height: 16),

@@ -22,13 +22,14 @@ class LoganXManChelovekAdapter extends TypeAdapter<LoganXManChelovek> {
       dateTime: fields[2] as DateTime,
       mainImage: fields[4] as String?,
       group: fields[3] as String?,
+      kcal: fields[5] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, LoganXManChelovek obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.noteType)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class LoganXManChelovekAdapter extends TypeAdapter<LoganXManChelovek> {
       ..writeByte(3)
       ..write(obj.group)
       ..writeByte(4)
-      ..write(obj.mainImage);
+      ..write(obj.mainImage)
+      ..writeByte(5)
+      ..write(obj.kcal);
   }
 
   @override

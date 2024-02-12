@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
 import 'package:affordable_yoga_252/screen/bottom_navigation_bar/bottom_naviator_screen.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +147,7 @@ class _NewNotePageState extends State<NewNotePage> {
                       dateTime: DateTime.now(),
                       group: widget.group,
                       mainImage: widget.mainImage,
+                      kcal: Random().nextInt(551) + 150,
                     );
                     var tayotaCrown = await Hive.openBox<LoganXManChelovek>(
                       'karakol',

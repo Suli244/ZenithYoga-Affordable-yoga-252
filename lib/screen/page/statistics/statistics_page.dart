@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
@@ -55,6 +57,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
   List<FlSpot> days = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
   List<FlSpot> weeks = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
   List<FlSpot> months = [FlSpot(0.5, Random().nextDouble() * 5 + 1)];
+  int daysKcal = 0;
+  int weeksKcal = 0;
+  int monthsKcal = 0;
   late Box<LoganXManChelovek> box;
 
   @override
@@ -81,16 +86,25 @@ class _StatisticsPageState extends State<StatisticsPage> {
               element.dateTime.hour.toDouble() +
                   (element.dateTime.minute.toDouble() / 100),
               Random().nextDouble() * 5 + 1));
+          if (element.kcal != null) {
+            daysKcal += element.kcal!;
+          }
         }
         if (element.dateTime
                 .isAfter(monday.subtract(const Duration(days: 1))) &&
             element.dateTime.isBefore(sunday.add(const Duration(days: 1)))) {
           weeks.add(FlSpot(element.dateTime.weekday.toDouble(),
               Random().nextDouble() * 5 + 1));
+          if (element.kcal != null) {
+            weeksKcal += element.kcal!;
+          }
         }
         if (element.dateTime.month == today.month) {
           months.add(FlSpot(
               element.dateTime.day.toDouble(), Random().nextDouble() * 5 + 1));
+          if (element.kcal != null) {
+            monthsKcal += element.kcal!;
+          }
         }
       }
       print('days $days weeks $weeks months $months');
@@ -257,9 +271,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                const Text(
-                                                  '22,634.45 kcal',
-                                                  style: TextStyle(
+                                                Text(
+                                                  '${indexChart == 0 ? daysKcal.toString() : indexChart == 1 ? weeksKcal.toString() : monthsKcal.toString()} kcal',
+                                                  style: const TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -330,8 +344,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                child: Image.network(
-                                                  result[index][0].mainImage!,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: result[index][0]
+                                                      .mainImage!,
+                                                  placeholder: (context, url) =>
+                                                      const Center(
+                                                          child:
+                                                              CupertinoActivityIndicator()),
                                                   fit: BoxFit.cover,
                                                   height: 81,
                                                   width: 81,
