@@ -84,8 +84,8 @@ class MeditationDetailYogaPage extends StatelessWidget {
                             FittedBox(
                               child: Text(
                                 '${index + 1}. ${yoga.title}',
-                                style: TextStyle(
-                                  fontSize: 15.h,
+                                style: const TextStyle(
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -94,8 +94,8 @@ class MeditationDetailYogaPage extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 yoga.desciption,
-                                style: TextStyle(
-                                  fontSize: 12.h,
+                                style: const TextStyle(
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),
                                 overflow: TextOverflow.ellipsis,
