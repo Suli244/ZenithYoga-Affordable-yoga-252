@@ -33,7 +33,7 @@ dependencies:
   apphud: ^2.2.6
   flutter_screenutil: ^5.9.0
   shared_preferences: ^2.0.15
-  webview_flutter: ^4.4.2
+  # webview_flutter: ^4.4.2
   smooth_page_indicator: ^1.1.0
   intl: ^0.18.0
   freezed_annotation: ^2.1.0
@@ -45,6 +45,7 @@ dependencies:
   dio: ^5.4.0
   cached_network_image: ^3.3.1
   fl_chart: ^0.62.0
+  url_launcher: ^6.2.4
 
 
   # The following adds the Cupertino Icons font to your application.

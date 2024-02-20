@@ -187,7 +187,7 @@ class BodyList extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    MeditationDetailYogaPage(katalizator: katalizator),
+                    MeditationDetailPage(katalizator: katalizator),
               ),
             ),
             child: Container(

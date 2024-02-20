@@ -17,8 +17,6 @@ PODS:
     - FlutterMacOS
   - url_launcher_ios (0.0.1):
     - Flutter
-  - webview_flutter_wkwebview (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - apphud (from `.symlinks/plugins/apphud/ios`)
@@ -28,7 +26,6 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
@@ -49,8 +46,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
-  webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   apphud: 5ca6f25a0d8b9264a3f8a597f2d13f4a24941707
@@ -61,7 +56,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
-  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 
