@@ -39,7 +39,10 @@ class _BottomNavigatorState extends State<BottomNavigatorScreen> {
         ),
       ],
       child: Scaffold(
-        body: pages[index],
+        body: IndexedStack(
+          index: index,
+          children: pages,
+        ),
         extendBody: true,
         bottomNavigationBar: BottomNavigationBar(
           elevation: 0,

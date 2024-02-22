@@ -118,38 +118,31 @@ class _NotesPageState extends State<NotesPage> {
                                       ),
                                       padding: const EdgeInsets.all(16)
                                           .copyWith(bottom: 0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              FittedBox(
-                                                child: Text(
-                                                  DateFormat('MMMMd').format(
-                                                      yoga[index].dateTime),
-                                                  style: TextStyle(
-                                                    fontSize: 15.h,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
+                                          FittedBox(
+                                            child: Text(
+                                              DateFormat('MMMMd')
+                                                  .format(yoga[index].dateTime),
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w400,
                                               ),
-                                              SizedBox(height: 8.h),
-                                              Flexible(
-                                                child: Text(
-                                                  yoga[index].mnogoTexta,
-                                                  style: TextStyle(
-                                                    fontSize: 12.h,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 4,
-                                                ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Flexible(
+                                            child: Text(
+                                              yoga[index].mnogoTexta,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                            ],
+                                              maxLines: 4,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -194,46 +187,38 @@ class _NotesPageState extends State<NotesPage> {
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
-                                      height: 114,
+                                      // height: 114,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
                                         color: Colors.white,
                                       ),
-                                      padding: const EdgeInsets.all(16)
-                                          .copyWith(bottom: 0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              FittedBox(
-                                                child: Text(
-                                                  DateFormat('MMMMd').format(
-                                                      meditation[index]
-                                                          .dateTime),
-                                                  style: TextStyle(
-                                                    fontSize: 15.h,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
+                                          FittedBox(
+                                            child: Text(
+                                              DateFormat('MMMMd').format(
+                                                  meditation[index].dateTime),
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w400,
                                               ),
-                                              SizedBox(height: 8.h),
-                                              Flexible(
-                                                child: Text(
-                                                  meditation[index].mnogoTexta,
-                                                  style: TextStyle(
-                                                    fontSize: 12.h,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 4,
-                                                ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 8.h),
+                                          ConstrainedBox(
+                                            constraints: const BoxConstraints(
+                                                minHeight: 84),
+                                            child: Text(
+                                              meditation[index].mnogoTexta,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),

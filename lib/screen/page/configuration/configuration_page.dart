@@ -6,6 +6,7 @@ import 'package:affordable_yoga_252/screen/page/configuration/widget/configurati
 import 'package:affordable_yoga_252/screen/page/configuration/widget/web_view_insightful_news.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfigurationPage extends StatefulWidget {
   const ConfigurationPage({super.key});
@@ -50,41 +51,17 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             ConfigurationItemWidget(
                 titl: 'Privacy policy',
                 onTaab: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WebFFAffordableYoga(
-                        title: 'Privacy Policy',
-                        url: DocFFAffordableYoga.pP,
-                      ),
-                    ),
-                  );
+                  launchUrl(Uri.parse(DocFFAffordableYoga.pP));
                 }),
             ConfigurationItemWidget(
                 titl: 'Terms of use',
                 onTaab: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WebFFAffordableYoga(
-                        title: 'Term of use',
-                        url: DocFFAffordableYoga.tUse,
-                      ),
-                    ),
-                  );
+                  launchUrl(Uri.parse(DocFFAffordableYoga.tUse));
                 }),
             ConfigurationItemWidget(
               titl: 'Support',
               onTaab: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const WebFFAffordableYoga(
-                      title: 'Support',
-                      url: DocFFAffordableYoga.s,
-                    ),
-                  ),
-                );
+                launchUrl(Uri.parse(DocFFAffordableYoga.s));
               },
             ),
             if (!isPremActi)

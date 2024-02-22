@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExclusiveScreen extends StatefulWidget {
   const ExclusiveScreen({super.key, this.isClose = false});
@@ -193,26 +194,10 @@ class _ExclusiveScreenState extends State<ExclusiveScreen> {
                   SizedBox(height: 24.h),
                   RestoreButtons(
                     onPressPrivacyPolicy: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const WebFFAffordableYoga(
-                            title: 'Privacy Policy',
-                            url: DocFFAffordableYoga.pP,
-                          ),
-                        ),
-                      );
+                      launchUrl(Uri.parse(DocFFAffordableYoga.pP));
                     },
                     onPressTermOfService: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const WebFFAffordableYoga(
-                            title: 'Term of use',
-                            url: DocFFAffordableYoga.tUse,
-                          ),
-                        ),
-                      );
+                      launchUrl(Uri.parse(DocFFAffordableYoga.tUse));
                     },
                     onPressRestorePurchases: () {
                       WebPremiumAffordableYoga
