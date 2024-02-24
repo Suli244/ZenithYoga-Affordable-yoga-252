@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:affordable_yoga_252/MODELS/noter_model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -255,8 +256,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                     'assets/images/statistic_icon.png'),
                                                 const SizedBox(width: 12),
                                                 const Expanded(
-                                                  child: Text(
+                                                  child: AutoSizeText(
                                                       'You haven\'t done yoga or meditation yet. So we can\'t count calories, do any of these things to get statistics.',
+                                                      // minFontSize: 8,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w400,
